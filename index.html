@@ -1297,7 +1297,7 @@
                     <span>Total</span>
                     <span class="total-amount" id="cartTotal">$0 MXN</span>
                 </div>
-                <button class="checkout-btn" id="checkoutBtn">Proceder al pago</button>
+                <button class="checkout-btn" id="checkoutBtn">Completar pedido</button>
             </div>
         </div>
     </div>
@@ -1745,7 +1745,7 @@
                 `¡Hola! Soy *${nickname}* y quiero hacer el siguiente pedido:\n\n` +
                 `${items}\n\n` +
                 `💰 *Total: $${grandTotal} MXN*\n\n` +
-                `¿Me pueden confirmar disponibilidad y coordinar la entrega? ¡Gracias!`;
+                `¡Gracias!`;
 
             const waURL = `https://wa.me/${WA_NUMBER}/?text=${encodeURIComponent(message)}`;
 
