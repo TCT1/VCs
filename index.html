@@ -26,6 +26,11 @@
             --glow: rgba(124, 58, 237, .35);
             --white: #ffffff;
             --price: #d8b4fe;
+            /* brand colors */
+            --vhill: #7c3aed;
+            --vhill-glow: rgba(124, 58, 237, .25);
+            --iplay: #0ea5e9;
+            --iplay-glow: rgba(14, 165, 233, .25);
         }
 
         [data-theme="light"] {
@@ -44,6 +49,8 @@
             --glow: rgba(124, 58, 237, .15);
             --white: #1a0533;
             --price: #6d28d9;
+            --iplay: #0284c7;
+            --iplay-glow: rgba(2, 132, 199, .15);
         }
 
         * {
@@ -61,7 +68,6 @@
             overflow-x: hidden;
         }
 
-        /* noise grain overlay */
         body::before {
             content: '';
             position: fixed;
@@ -180,13 +186,12 @@
             justify-content: center;
         }
 
-        /* ── HERO BANNER ── */
+        /* ── HERO ── */
         .hero {
             position: relative;
             padding: 4rem 2.5rem 3rem;
             overflow: hidden;
             text-align: center;
-            /* ← centrado */
         }
 
         .hero-glow {
@@ -203,7 +208,6 @@
         .hero h1 {
             font-family: 'Syne', sans-serif;
             font-size: clamp(3.2rem, 8vw, 7rem);
-            /* ← más grande */
             font-weight: 800;
             line-height: .95;
             letter-spacing: -.04em;
@@ -264,53 +268,78 @@
             margin-bottom: 2rem;
         }
 
-        .size-grid {
+        /* ── BRAND FILTER ── */
+        .brand-grid {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: .5rem;
         }
 
-        .size-btn {
+        .brand-btn {
+            display: flex;
+            align-items: center;
+            gap: .55rem;
             background: var(--surface);
             border: 1px solid var(--border);
             color: var(--muted);
-            border-radius: 6px;
-            padding: .3rem .7rem;
-            font-size: .82rem;
+            border-radius: 10px;
+            padding: .45rem .75rem;
+            font-size: .83rem;
             font-weight: 600;
             cursor: pointer;
             transition: all .15s;
             font-family: 'DM Sans', sans-serif;
+            text-align: left;
+            width: 100%;
         }
 
-        .size-btn:hover,
-        .size-btn.active {
-            background: var(--purple);
+        .brand-btn .brand-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .brand-btn[data-brand="all"] .brand-dot {
+            background: var(--muted);
+        }
+
+        .brand-btn[data-brand="vhill"] .brand-dot {
+            background: var(--vhill);
+        }
+
+        .brand-btn[data-brand="iplay"] .brand-dot {
+            background: var(--iplay);
+        }
+
+        .brand-btn:hover {
             border-color: var(--purple);
-            color: #fff;
-        }
-
-        .filter-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: .55rem 0;
-            border-bottom: 1px solid var(--border);
-            color: var(--muted);
-            font-size: .87rem;
-            cursor: pointer;
-            transition: color .15s;
-            user-select: none;
-        }
-
-        .filter-item:hover {
             color: var(--text);
         }
 
-        .filter-item svg {
-            width: 14px;
-            height: 14px;
-            opacity: .5;
+        .brand-btn.active[data-brand="all"] {
+            background: var(--surface);
+            border-color: var(--purple);
+            color: var(--text);
+        }
+
+        .brand-btn.active[data-brand="vhill"] {
+            background: rgba(124, 58, 237, .15);
+            border-color: var(--vhill);
+            color: var(--purple3);
+        }
+
+        .brand-btn.active[data-brand="iplay"] {
+            background: rgba(14, 165, 233, .15);
+            border-color: var(--iplay);
+            color: #7dd3fc;
+        }
+
+        .brand-count {
+            margin-left: auto;
+            font-size: .72rem;
+            color: var(--muted);
+            font-weight: 400;
         }
 
         .availability-opt {
@@ -332,12 +361,28 @@
             font-size: .78rem;
         }
 
-        /* ── MAIN CONTENT ── */
+        .filter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .55rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .87rem;
+            cursor: pointer;
+            transition: color .15s;
+            user-select: none;
+        }
+
+        .filter-item:hover {
+            color: var(--text);
+        }
+
+        /* ── MAIN ── */
         .main-content {
             padding: 2rem 0 2rem 2rem;
         }
 
-        /* search bar */
         .search-wrap {
             display: flex;
             align-items: center;
@@ -443,6 +488,51 @@
             box-shadow: 0 12px 40px var(--glow);
         }
 
+        .product-card[data-brand="iplay"]:hover {
+            border-color: var(--iplay);
+            box-shadow: 0 12px 40px var(--iplay-glow);
+        }
+
+        /* ── BRAND LABEL on card ── */
+        .card-brand-label {
+            display: inline-flex;
+            align-items: center;
+            gap: .3rem;
+            border-radius: 6px;
+            padding: .18rem .5rem;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: .35rem;
+        }
+
+        .card-brand-label.vhill {
+            background: rgba(124, 58, 237, .18);
+            color: var(--purple3);
+            border: 1px solid rgba(124, 58, 237, .35);
+        }
+
+        .card-brand-label.iplay {
+            background: rgba(14, 165, 233, .18);
+            color: #7dd3fc;
+            border: 1px solid rgba(14, 165, 233, .35);
+        }
+
+        .card-brand-label .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .card-brand-label.vhill .dot {
+            background: var(--purple3);
+        }
+
+        .card-brand-label.iplay .dot {
+            background: #7dd3fc;
+        }
+
         .fav-badge {
             position: absolute;
             top: .6rem;
@@ -487,7 +577,6 @@
             transform: none;
         }
 
-        /* card image: supports both <img> and emoji fallback */
         .card-img {
             width: 100%;
             aspect-ratio: 1/1.1;
@@ -532,7 +621,6 @@
             line-height: 1.2;
         }
 
-        /* 4 specs grid */
         .specs-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -558,6 +646,10 @@
             height: 11px;
             flex-shrink: 0;
             color: var(--purple3);
+        }
+
+        .product-card[data-brand="iplay"] .spec-chip svg {
+            color: #7dd3fc;
         }
 
         .card-footer {
@@ -590,6 +682,14 @@
         .add-btn:hover {
             background: var(--purple2);
             transform: scale(1.05);
+        }
+
+        .product-card[data-brand="iplay"] .add-btn {
+            background: var(--iplay);
+        }
+
+        .product-card[data-brand="iplay"] .add-btn:hover {
+            background: #0284c7;
         }
 
         /* ── CART DRAWER ── */
@@ -704,6 +804,22 @@
 
         .cart-item-info {
             flex: 1;
+        }
+
+        .cart-item-brand {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-bottom: .1rem;
+        }
+
+        .cart-item-brand.vhill {
+            color: var(--purple3);
+        }
+
+        .cart-item-brand.iplay {
+            color: #7dd3fc;
         }
 
         .cart-item-name {
@@ -899,12 +1015,6 @@
             background: var(--surface);
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: .75rem;
-        }
-
         .modal-btns {
             display: flex;
             gap: .75rem;
@@ -954,7 +1064,6 @@
             flex-shrink: 0;
         }
 
-        /* success state */
         .success-state {
             text-align: center;
             padding: 1rem 0;
@@ -986,7 +1095,6 @@
             line-height: 1.6;
         }
 
-        /* no results */
         .no-results {
             grid-column: 1/-1;
             text-align: center;
@@ -1079,7 +1187,6 @@
             font-size: .8rem;
         }
 
-        /* animations */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -1096,7 +1203,6 @@
             animation: fadeUp .4s ease both;
         }
 
-        /* scrollbar */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -1174,7 +1280,7 @@
     <!-- HERO -->
     <div class="hero">
         <div class="hero-glow"></div>
-        <h1>VCs<br><span>VHILL</span></h1>
+        <h1>VCs<br><span>Corp</span></h1>
     </div>
 
     <!-- STORE -->
@@ -1184,12 +1290,35 @@
         <aside class="sidebar">
 
             <div class="filter-section">
+                <h3>Marca</h3>
+                <div class="brand-grid">
+                    <button class="brand-btn active" data-brand="all">
+                        <span class="brand-dot"></span>
+                        Todas las marcas
+                        <span class="brand-count" id="brandCountAll"></span>
+                    </button>
+                    <button class="brand-btn" data-brand="iplay">
+                        <span class="brand-dot"></span>
+                        IPLAY MAX
+                        <span class="brand-count" id="brandCountIplay"></span>
+                    </button>
+                    <button class="brand-btn" data-brand="vhill">
+                        <span class="brand-dot"></span>
+                        Vhill V3000
+                        <span class="brand-count" id="brandCountVhill"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="filter-section">
                 <h3>Disponibilidad</h3>
                 <label class="availability-opt">
-                    <input type="checkbox" checked id="filterAvailChk"> Disponible <span class="avail-count" id="sideAvailCount">(36)</span>
+                    <input type="checkbox" checked id="filterAvailChk"> Disponible <span class="avail-count"
+                        id="sideAvailCount">(0)</span>
                 </label>
                 <label class="availability-opt">
-                    <input type="checkbox" id="filterNoStockChk"> Sin stock <span class="avail-count" id="sideNoStockCount">(0)</span>
+                    <input type="checkbox" id="filterNoStockChk"> Sin stock <span class="avail-count"
+                        id="sideNoStockCount">(0)</span>
                 </label>
             </div>
 
@@ -1199,11 +1328,6 @@
                     <span>Solo favoritos</span>
                     <input type="checkbox" id="favFilterChk" style="accent-color:var(--purple);">
                 </div>
-            </div>
-
-            <div class="filter-section">
-                <h3>Precio</h3>
-                <div class="filter-item"><span>$300 MXN</span></div>
             </div>
         </aside>
 
@@ -1218,7 +1342,7 @@
                     </svg>
                     <input type="text" id="searchInput" placeholder="Buscar sabores..." autocomplete="off">
                 </div>
-                <span class="result-count" id="resultCount">36 productos</span>
+                <span class="result-count" id="resultCount">0 productos</span>
             </div>
 
             <div class="category-pills">
@@ -1338,21 +1462,15 @@
         //  CONFIGURABLE DATA
         // ──────────────────────────────────────────────
 
-        const PRICE = 300;
         const WA_NUMBER = "+529211435599";
 
-        // Favorites
-        const FAVORITES = [
-            "strawberry watermelon",
-            "black mint",
-            "lush ice",
-            "grape strawberry",
-            "cool mint",
-            "grape ice"
+        // ── VHILL products ────────────────────────────
+        const VHILL_PRICE = 300;
+        const VHILL_FAVORITES = [
+            "strawberry watermelon", "black mint", "lush ice",
+            "grape strawberry", "cool mint", "grape ice"
         ];
-
-        // Category tags
-        const CATEGORIES = {
+        const VHILL_CATEGORIES = {
             "strawberry watermelon": ["frutal"],
             "black mint": ["menta"],
             "grape strawberry": ["frutal"],
@@ -1390,32 +1508,23 @@
             "unicorn shake": ["cremoso"],
             "white carajillo": ["bebida", "cremoso"]
         };
-
-        // ─────────────────────────────────────────────────────────────────
-        //  IMAGES — sustituye el valor por la URL o ruta de tu imagen.
-        //  Si un sabor no tiene imagen definida, se mostrará el emoji de
-        //  respaldo (EMOJIS). Para quitar un emoji y usar imagen pon la URL.
-        // ─────────────────────────────────────────────────────────────────
-        const IMAGES = {
-            // Ejemplos (reemplaza con tus propias URLs o rutas relativas):
-            // "strawberry watermelon": "https://example.com/img/strawberry-watermelon.jpg",
-            // "mango ice": "./img/mango-ice.png",
-            "strawberry watermelon": "img/vhill-v3000-strawberry-watermelon.png", "black mint": "img/vhill-v3000-black-mint.webp", "grape strawberry": "img/vhill-v3000-grape-strawberry.webp",
-            "apple strawberry raspberry": "", "black berry ice": "", "blueberry raspberry ice": "",
-            "blueberry kiwi": "", "banana ice": "", "blueberry mango": "",
-            "bubblegum mint": "", "coconut milk": "img/vhill-v3000-coconut-milk.webp", "cool mint": "img/vhill-v3000-cool-mint.webp",
-            "coconut ice": "", "cherry ice": "img/vhill-v3000-cherry-ice.webp", "coconut pineapple": "img/vhill-v3000-coconut-pineapple.webp",
-            "energy drink": "img/vhill-v3000-energy-drink.webp", "clear": "img/vhill-v3000-clear.webp", "cherry mint": "",
-            "green apple": "", "guava raspberry": "", "grape lemonade": "",
-            "grape ice": "img/vhill-v3000-grape-ice.webp", "kiwi passion fruit guava": "", "lychee ice": "img/vhill-v3000-lychee-ice.webp",
-            "lush ice": "img/vhill-v3000-lush-ice.webp", "mighty mint": "", "mango ice": "",
-            "mint tobacco": "", "orange ice": "", "peach blueberry": "",
-            "peach mango": "", "peach ice": "img/vhill-v3000-peach-ice.webp", "raspberry candy bubblegum": "img/vhill-v3000-raspberry-candy-bubblegum.webp",
-            "strawberry banana": "", "unicorn shake": "", "white carajillo": ""
+        const VHILL_IMAGES = {
+            "strawberry watermelon": "img/vhill-v3000-strawberry-watermelon.png",
+            "black mint": "img/vhill-v3000-black-mint.webp",
+            "grape strawberry": "img/vhill-v3000-grape-strawberry.webp",
+            "coconut milk": "img/vhill-v3000-coconut-milk.webp",
+            "cool mint": "img/vhill-v3000-cool-mint.webp",
+            "cherry ice": "img/vhill-v3000-cherry-ice.webp",
+            "coconut pineapple": "img/vhill-v3000-coconut-pineapple.webp",
+            "energy drink": "img/vhill-v3000-energy-drink.webp",
+            "clear": "img/vhill-v3000-clear.webp",
+            "grape ice": "img/vhill-v3000-grape-ice.webp",
+            "lychee ice": "img/vhill-v3000-lychee-ice.webp",
+            "lush ice": "img/vhill-v3000-lush-ice.webp",
+            "peach ice": "img/vhill-v3000-peach-ice.webp",
+            "raspberry candy bubblegum": "img/vhill-v3000-raspberry-candy-bubblegum.webp"
         };
-
-        // Emoji fallback (se usa cuando IMAGES[name] no está definido)
-        const EMOJIS = {
+        const VHILL_EMOJIS = {
             "strawberry watermelon": "🍓", "black mint": "🖤", "grape strawberry": "🍇",
             "apple strawberry raspberry": "🍎", "black berry ice": "🫐", "blueberry raspberry ice": "🫐",
             "blueberry kiwi": "🥝", "banana ice": "🍌", "blueberry mango": "🥭",
@@ -1429,91 +1538,141 @@
             "peach mango": "🍑", "peach ice": "🍑", "raspberry candy bubblegum": "🍬",
             "strawberry banana": "🍓", "unicorn shake": "🦄", "white carajillo": "☕"
         };
-
-        const ALL_PRODUCTS = Object.keys(CATEGORIES);
-
-        // ──────────────────────────────────────────────
-        //  STOCK  ← cambia a false los que no tengas
-        // ──────────────────────────────────────────────
-        const STOCK = {
-            "strawberry watermelon": true,
-            "black mint": true,
-            "grape ice": true,
-            "cool mint": true,
-            "grape strawberry": true,
-            "apple strawberry raspberry": false,
-            "black berry ice": true,
-            "blueberry raspberry ice": true,
-            "blueberry kiwi": true,
-            "banana ice": false,
-            "blueberry mango": false,
-            "bubblegum mint": true,
-            "coconut milk": false,
-            "coconut ice": false,
-            "cherry ice": true,
-            "coconut pineapple": false,
-            "energy drink": false,
-            "clear": true,
-            "cherry mint": true,
-            "green apple": false,
-            "guava raspberry": false,
-            "grape lemonade": false,
-            "kiwi passion fruit guava": false,
-            "lychee ice": true,
-            "lush ice": true,
-            "mighty mint": true,
-            "mango ice": true,
-            "mint tobacco": false,
-            "orange ice": false,
-            "peach blueberry": false,
-            "peach mango": false,
-            "peach ice": true,
-            "raspberry candy bubblegum": true,
-            "strawberry banana": true,
-            "unicorn shake": false,
-            "white carajillo": true
+        const VHILL_STOCK = {
+            "strawberry watermelon": false, "black mint": false, "grape ice": false, "cool mint": false,
+            "grape strawberry": false, "apple strawberry raspberry": false, "black berry ice": false,
+            "blueberry raspberry ice": false, "blueberry kiwi": false, "banana ice": false,
+            "blueberry mango": false, "bubblegum mint": false, "coconut milk": false, "coconut ice": false,
+            "cherry ice": false, "coconut pineapple": false, "energy drink": false, "clear": false,
+            "cherry mint": false, "green apple": false, "guava raspberry": false, "grape lemonade": false,
+            "kiwi passion fruit guava": false, "lychee ice": false, "lush ice": false, "mighty mint": false,
+            "mango ice": false, "mint tobacco": false, "orange ice": false, "peach blueberry": false,
+            "peach mango": false, "peach ice": false, "raspberry candy bubblegum": false,
+            "strawberry banana": false, "unicorn shake": false, "white carajillo": false
         };
+
+        // ── IPLAY products ────────────────────────────
+        // Precio IPLAY — ajusta según corresponda
+        const IPLAY_PRICE = 280;
+
+        // Agrega/quita sabores aquí. La clave es el nombre en minúsculas.
+        const IPLAY_CATEGORIES = {
+            "Black Mint": ["frutal"],
+            "Berry Watermelon": ["frutal"],
+            "Grape Ice": ["frutal"],
+            "Peach Berries Ice": ["frutal"],
+            "Strawberry Ice": ["frutal"],
+            "Grape Strawberry": ["frutal"],
+            "Cool Mint": ["frutal"]
+        };
+        const IPLAY_IMAGES = {
+            "Grape Ice": "img/iplay-max-2500-grape-ice.webp",
+            "Peach Berries Ice": "img/iplay-max-2500-peach-berries-ice.webp",
+            "Strawberry Ice": "",
+            "Berry Watermelon": "img/iplay-max-2500-berry-watermelon.webp",
+            "Grape Strawberry": "img/iplay-max-2500-grape-strawberry.webp",
+            "Cool Mint": "img/iplay-max-2500-cool-mint.webp",
+            "Black Mint": "img/iplay-max-2500-black-mint.webp",
+        };
+        const IPLAY_EMOJIS = {
+            "Grape Ice": "🍇",
+            "Peach Berries Ice": "🍑",
+            "Strawberry Ice": "🍓",
+            "Berry Watermelon": "🍉",
+            "Grape Strawberry": "",
+            "Cool Mint": "❄️",
+            "Black Mint": "🖤",
+        };
+        const IPLAY_STOCK = {
+            "Grape Ice": true,
+            "Peach Berries Ice": true,
+            "Strawberry Ice": true,
+            "Berry Watermelon": true,
+            "Grape Strawberry": true,
+            "Cool Mint": true,
+            "Black Mint": true,
+        };
+        const IPLAY_FAVORITES = [
+            "Berry Watermelon", "Black Mint", "Grape Ice"
+        ];
+
+        // ── Unified product list ───────────────────────
+        function buildAllProducts() {
+            const list = [];
+            Object.keys(VHILL_CATEGORIES).forEach(name => {
+                list.push({
+                    name,
+                    brand: "vhill",
+                    price: VHILL_PRICE,
+                    categories: VHILL_CATEGORIES[name],
+                    image: VHILL_IMAGES[name] || "",
+                    emoji: VHILL_EMOJIS[name] || "💨",
+                    stock: VHILL_STOCK[name] !== false,
+                    fav: VHILL_FAVORITES.includes(name),
+                    specs: { puffs: "3000 puffs", coil: "1.0Ω mesh coil", juice: "10ml", battery: "1450 mAh", nic: "5%" }
+                });
+            });
+            Object.keys(IPLAY_CATEGORIES).forEach(name => {
+                list.push({
+                    name,
+                    brand: "iplay",
+                    price: IPLAY_PRICE,
+                    categories: IPLAY_CATEGORIES[name],
+                    image: IPLAY_IMAGES[name] || "",
+                    emoji: IPLAY_EMOJIS[name] || "💨",
+                    stock: IPLAY_STOCK[name] !== false,
+                    fav: IPLAY_FAVORITES.includes(name),
+                    specs: { puffs: "2500 puffs", coil: "1.2Ω coil", juice: "8ml", battery: "1200 mAh", nic: "5%" }
+                });
+            });
+            return list;
+        }
+
+        const ALL_PRODUCTS = buildAllProducts();
 
         // ──────────────────────────────────────────────
         //  STATE
         // ──────────────────────────────────────────────
-        let cart = {};
+        let cart = {};          // key: "brand::name"
         let currentSearch = "";
         let currentCat = "all";
+        let currentBrand = "all";
         let favOnly = false;
         let filterAvail = true;
         let filterNoStock = false;
 
-        // ── Counts dinámicos ──────────────────────────
-        function getStockCounts() {
-            const avail = ALL_PRODUCTS.filter(n => STOCK[n] !== false).length;
-            const noStock = ALL_PRODUCTS.length - avail;
-            return { avail, noStock };
-        }
-
-        function updateSidebarCounts() {
-            const { avail, noStock } = getStockCounts();
-            const availEl = document.getElementById("sideAvailCount");
-            const noStockEl = document.getElementById("sideNoStockCount");
-            if (availEl) availEl.textContent = `(${avail})`;
-            if (noStockEl) noStockEl.textContent = `(${noStock})`;
-        }
-
         // ──────────────────────────────────────────────
         //  HELPERS
         // ──────────────────────────────────────────────
-        function getCardMedia(name) {
-            if (IMAGES[name]) {
-                return `<img src="${IMAGES[name]}" alt="${name}" loading="lazy">`;
-            }
-            return EMOJIS[name] || "💨";
+        function cardMedia(p) {
+            return p.image
+                ? `<img src="${p.image}" alt="${p.name}" loading="lazy">`
+                : p.emoji;
         }
 
-        function getCartMedia(name) {
-            if (IMAGES[name]) {
-                return `<img src="${IMAGES[name]}" alt="${name}" loading="lazy">`;
+        function brandLabel(p) {
+            if (p.brand === "vhill") {
+                return `<span class="card-brand-label vhill"><span class="dot"></span>Vhill V3000</span>`;
             }
-            return EMOJIS[name] || "💨";
+            return `<span class="card-brand-label iplay"><span class="dot"></span>IPLAY MAX</span>`;
+        }
+
+        function cartKey(p) { return `${p.brand}::${p.name}`; }
+
+        // ──────────────────────────────────────────────
+        //  SIDEBAR COUNTS
+        // ──────────────────────────────────────────────
+        function updateSidebarCounts() {
+            const avail = ALL_PRODUCTS.filter(p => p.stock).length;
+            const noStock = ALL_PRODUCTS.length - avail;
+            document.getElementById("sideAvailCount").textContent = `(${avail})`;
+            document.getElementById("sideNoStockCount").textContent = `(${noStock})`;
+
+            const vhillCount = ALL_PRODUCTS.filter(p => p.brand === "vhill").length;
+            const iplayCount = ALL_PRODUCTS.filter(p => p.brand === "iplay").length;
+            document.getElementById("brandCountAll").textContent = ALL_PRODUCTS.length;
+            document.getElementById("brandCountVhill").textContent = vhillCount;
+            document.getElementById("brandCountIplay").textContent = iplayCount;
         }
 
         // ──────────────────────────────────────────────
@@ -1523,22 +1682,23 @@
             const grid = document.getElementById("productsGrid");
             const query = currentSearch.toLowerCase().trim();
 
-            let filtered = ALL_PRODUCTS.filter(name => {
-                const inStock = STOCK[name] !== false;
-                const matchSearch = name.includes(query);
-                const matchCat = currentCat === "all" || (CATEGORIES[name] || []).includes(currentCat);
-                const matchFav = !favOnly || FAVORITES.includes(name);
-                const matchAvail = (filterAvail && inStock) || (filterNoStock && !inStock);
-                return matchSearch && matchCat && matchFav && matchAvail;
+            let filtered = ALL_PRODUCTS.filter(p => {
+                const matchSearch = p.name.includes(query);
+                const matchCat = currentCat === "all" || p.categories.includes(currentCat);
+                const matchBrand = currentBrand === "all" || p.brand === currentBrand;
+                const matchFav = !favOnly || p.fav;
+                const matchAvail = (filterAvail && p.stock) || (filterNoStock && !p.stock);
+                return matchSearch && matchCat && matchBrand && matchFav && matchAvail;
             });
 
-            // Si ningún filtro de disponibilidad está activo, mostrar todos
+            // if no availability filter active → show all
             if (!filterAvail && !filterNoStock) {
-                filtered = ALL_PRODUCTS.filter(name => {
-                    const matchSearch = name.includes(query);
-                    const matchCat = currentCat === "all" || (CATEGORIES[name] || []).includes(currentCat);
-                    const matchFav = !favOnly || FAVORITES.includes(name);
-                    return matchSearch && matchCat && matchFav;
+                filtered = ALL_PRODUCTS.filter(p => {
+                    const matchSearch = p.name.includes(query);
+                    const matchCat = currentCat === "all" || p.categories.includes(currentCat);
+                    const matchBrand = currentBrand === "all" || p.brand === currentBrand;
+                    const matchFav = !favOnly || p.fav;
+                    return matchSearch && matchCat && matchBrand && matchFav;
                 });
             }
 
@@ -1546,65 +1706,63 @@
                 filtered.length === 1 ? "1 producto" : `${filtered.length} productos`;
 
             updateSidebarCounts();
-
             grid.innerHTML = "";
 
             if (!filtered.length) {
                 grid.innerHTML = `<div class="no-results">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <h3>Sin resultados</h3>
-      <p>Intenta con otro sabor</p>
-    </div>`;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <h3>Sin resultados</h3>
+                    <p>Intenta con otro sabor o marca</p>
+                </div>`;
                 return;
             }
 
-            filtered.forEach((name, i) => {
-                const isFav = FAVORITES.includes(name);
-                const inStock = STOCK[name] !== false;
-                const media = getCardMedia(name);
+            filtered.forEach((p, i) => {
                 const card = document.createElement("div");
-                card.className = "product-card" + (inStock ? "" : " out-of-stock");
+                card.className = "product-card" + (p.stock ? "" : " out-of-stock");
+                card.dataset.brand = p.brand;
                 card.style.animationDelay = `${i * 0.04}s`;
 
+                const s = p.specs;
                 card.innerHTML = `
-      ${isFav ? '<span class="fav-badge">Top Sales</span>' : ''}
-      ${!inStock ? '<span class="stock-badge">Sin stock</span>' : ''}
-      <div class="card-img">${media}</div>
-      <div class="card-body">
-        <div class="card-name">${name}</div>
-        <div class="specs-grid">
-          <div class="spec-chip">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            3000 puffs
-          </div>
-          <div class="spec-chip">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            1.0&Omega; mesh coil
-          </div>
-          <div class="spec-chip">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            10ml
-          </div>
-          <div class="spec-chip">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
-            1450 mAh
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="card-price">$${PRICE} MXN</span>
-          <button class="add-btn" data-name="${name}" ${!inStock ? 'disabled' : ''}>
-            ${inStock ? '+ Agregar' : 'No disponible'}
-          </button>
-        </div>
-      </div>`;
-
+                    ${p.fav ? '<span class="fav-badge">Top Sales</span>' : ''}
+                    ${!p.stock ? '<span class="stock-badge">Sin stock</span>' : ''}
+                    <div class="card-img">${cardMedia(p)}</div>
+                    <div class="card-body">
+                        ${brandLabel(p)}
+                        <div class="card-name">${p.name}</div>
+                        <div class="specs-grid">
+                            <div class="spec-chip">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                                ${s.puffs}
+                            </div>
+                            <div class="spec-chip">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                ${s.coil}
+                            </div>
+                            <div class="spec-chip">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                ${s.juice} · ${s.nic}
+                            </div>
+                            <div class="spec-chip">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+                                ${s.battery}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-price">$${p.price} MXN</span>
+                            <button class="add-btn" data-key="${cartKey(p)}" ${!p.stock ? 'disabled' : ''}>
+                                ${p.stock ? '+ Agregar' : 'No disponible'}
+                            </button>
+                        </div>
+                    </div>`;
                 grid.appendChild(card);
             });
 
             grid.querySelectorAll(".add-btn").forEach(btn => {
                 btn.addEventListener("click", e => {
                     e.stopPropagation();
-                    addToCart(btn.dataset.name);
+                    addToCart(btn.dataset.key);
                 });
             });
         }
@@ -1612,8 +1770,13 @@
         // ──────────────────────────────────────────────
         //  CART
         // ──────────────────────────────────────────────
-        function addToCart(name) {
-            cart[name] = (cart[name] || 0) + 1;
+        function productByKey(key) {
+            const [brand, name] = key.split("::");
+            return ALL_PRODUCTS.find(p => p.brand === brand && p.name === name);
+        }
+
+        function addToCart(key) {
+            cart[key] = (cart[key] || 0) + 1;
             updateCart();
             const el = document.getElementById("cartCount");
             el.style.transform = "scale(1.4)";
@@ -1626,37 +1789,40 @@
 
             const itemsEl = document.getElementById("cartItems");
             const emptyEl = document.getElementById("cartEmpty");
-            const names = Object.keys(cart).filter(k => cart[k] > 0);
+            const keys = Object.keys(cart).filter(k => cart[k] > 0);
 
-            if (!names.length) {
+            if (!keys.length) {
                 if (!document.getElementById("cartEmpty")) itemsEl.appendChild(emptyEl);
                 emptyEl.style.display = "flex";
                 document.getElementById("cartTotal").textContent = "$0 MXN";
                 return;
             }
             emptyEl.style.display = "none";
-
             itemsEl.querySelectorAll(".cart-item").forEach(el => el.remove());
 
             let grand = 0;
-            names.forEach(name => {
-                const qty = cart[name];
-                grand += qty * PRICE;
-                const media = getCartMedia(name);
+            keys.forEach(key => {
+                const p = productByKey(key);
+                if (!p) return;
+                const qty = cart[key];
+                grand += qty * p.price;
+                const media = p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : p.emoji;
+                const brandName = p.brand === "vhill" ? "Vhill V3000" : "IPLAY MAX";
                 const div = document.createElement("div");
                 div.className = "cart-item";
                 div.innerHTML = `
-      <div class="cart-item-icon">${media}</div>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${name}</div>
-        <div class="cart-item-price">$${PRICE} MXN c/u</div>
-        <div class="cart-item-qty">
-          <button class="qty-btn" data-action="dec" data-name="${name}">−</button>
-          <span class="qty-num">${qty}</span>
-          <button class="qty-btn" data-action="inc" data-name="${name}">+</button>
-        </div>
-      </div>
-      <button class="cart-item-remove" data-name="${name}">✕</button>`;
+                    <div class="cart-item-icon">${media}</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-brand ${p.brand}">${brandName}</div>
+                        <div class="cart-item-name">${p.name}</div>
+                        <div class="cart-item-price">$${p.price} MXN c/u</div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" data-action="dec" data-key="${key}">−</button>
+                            <span class="qty-num">${qty}</span>
+                            <button class="qty-btn" data-action="inc" data-key="${key}">+</button>
+                        </div>
+                    </div>
+                    <button class="cart-item-remove" data-key="${key}">✕</button>`;
                 itemsEl.insertBefore(div, emptyEl);
             });
 
@@ -1664,14 +1830,14 @@
 
             itemsEl.querySelectorAll(".qty-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
-                    const n = btn.dataset.name;
-                    if (btn.dataset.action === "inc") cart[n]++;
-                    else { cart[n]--; if (cart[n] <= 0) delete cart[n]; }
+                    const k = btn.dataset.key;
+                    if (btn.dataset.action === "inc") cart[k]++;
+                    else { cart[k]--; if (cart[k] <= 0) delete cart[k]; }
                     updateCart();
                 });
             });
             itemsEl.querySelectorAll(".cart-item-remove").forEach(btn => {
-                btn.addEventListener("click", () => { delete cart[btn.dataset.name]; updateCart(); });
+                btn.addEventListener("click", () => { delete cart[btn.dataset.key]; updateCart(); });
             });
         }
 
@@ -1726,21 +1892,22 @@
 
         document.getElementById("confirmOrder").addEventListener("click", () => {
             const nickname = document.getElementById("fName").value.trim();
+            if (!nickname) { alert("Por favor escribe tu apodo."); return; }
 
-            if (!nickname) {
-                alert("Por favor escribe tu apodo.");
-                return;
-            }
-
-            // Build cart lines
             const items = Object.entries(cart)
                 .filter(([, q]) => q > 0)
-                .map(([n, q]) => `• ${n.charAt(0).toUpperCase() + n.slice(1)} x${q}`)
+                .map(([key, q]) => {
+                    const p = productByKey(key);
+                    const brandName = p.brand === "vhill" ? "Vhill V3000" : "IPLAY MAX";
+                    const nameCap = p.name.charAt(0).toUpperCase() + p.name.slice(1);
+                    return `• [${brandName}] ${nameCap} x${q}`;
+                })
                 .join("\n");
 
-            const grandTotal = Object.values(cart).reduce((a, b) => a + b, 0) * PRICE;
+            const grandTotal = Object.entries(cart)
+                .filter(([, q]) => q > 0)
+                .reduce((acc, [key, q]) => acc + (productByKey(key)?.price || 0) * q, 0);
 
-            // Compose WhatsApp message
             const message =
                 `¡Hola! Soy *${nickname}* y quiero hacer el siguiente pedido:\n\n` +
                 `${items}\n\n` +
@@ -1749,21 +1916,17 @@
 
             const waURL = `https://wa.me/${WA_NUMBER}/?text=${encodeURIComponent(message)}`;
 
-            // Show success state
             document.getElementById("checkoutForm").style.display = "none";
             const succ = document.getElementById("successState");
             succ.style.display = "block";
             document.getElementById("successMsg").innerHTML =
                 `Hola <strong>${nickname}</strong>, tu pedido fue armado.<br>
-     Se abrirá WhatsApp para enviarlo. Si no abre automáticamente,
-     <a href="${waURL}" target="_blank" rel="noopener noreferrer"
-        style="color:var(--purple3);text-decoration:underline;">haz clic aquí</a>.`;
+                Se abrirá WhatsApp para enviarlo. Si no abre automáticamente,
+                <a href="${waURL}" target="_blank" rel="noopener noreferrer"
+                   style="color:var(--purple3);text-decoration:underline;">haz clic aquí</a>.`;
 
-            // Clear cart
             cart = {};
             updateCart();
-
-            // Open WhatsApp
             setTimeout(() => window.open(waURL, "_blank"), 300);
         });
 
@@ -1784,6 +1947,16 @@
             });
         });
 
+        // Brand filter
+        document.querySelectorAll(".brand-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentBrand = btn.dataset.brand;
+                renderProducts();
+            });
+        });
+
         document.getElementById("toggleFavFilter").addEventListener("click", (e) => {
             if (e.target.id === "favFilterChk") return;
             const chk = document.getElementById("favFilterChk");
@@ -1796,7 +1969,6 @@
             renderProducts();
         });
 
-        // Disponibilidad
         document.getElementById("filterAvailChk").addEventListener("change", e => {
             filterAvail = e.target.checked;
             renderProducts();
