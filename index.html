@@ -38,7 +38,7 @@
   <!-- HERO -->
   <div class="hero">
     <div class="hero-glow"></div>
-    <h1>VCs<br><span>Corp</span></h1>
+    <h1><span>VCs</span></h1>
   </div>
 
   <!-- STORE -->
@@ -207,5 +207,9 @@
   <script src="js/supabase-config.js"></script>
   <!-- Lógica principal -->
   <script src="js/main.js"></script>
+
+  <script>
+    document.getElementById('getBackToStore')?.addEventListener('click', () => window.location.href = '?');
+  </script>
 </body>
 </html>

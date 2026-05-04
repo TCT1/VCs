@@ -184,7 +184,7 @@ nav {
 
 .hero h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-size: clamp(12rem, 8vw, 7rem);
   font-weight: 800;
   line-height: .95;
   letter-spacing: -.04em;
